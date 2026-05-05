@@ -4,44 +4,34 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-interface Project {
-  title: string;
-  type: string;
-  description: string;
-  tags: string[];
-  gradient: string;
-}
+interface Project { title: string; type: string; description: string; tags: string[]; gradient: string; }
 
 const PROJECTS: Project[] = [
   {
     title: "Document Extraction Chatbot",
     type: "LLM · RAG · NLP",
-    description:
-      "Government order chatbot using LangChain and LLMs with context-aware retrieval over document collections. End-to-end RAG pipeline design.",
+    description: "Government order chatbot using LangChain and LLMs with context-aware retrieval over document collections. End-to-end RAG pipeline design.",
     tags: ["LangChain", "LLMs", "TensorFlow", "RAG"],
     gradient: "from-blue-500 to-indigo-600",
   },
   {
     title: "Plant Disease Detection",
     type: "Computer Vision",
-    description:
-      "Real-time leaf image classification using YOLOv8 to detect plant diseases with actionable agricultural insights.",
+    description: "Real-time leaf image classification using YOLOv8 to detect plant diseases with actionable agricultural insights.",
     tags: ["YOLOv8", "OpenCV", "Python"],
     gradient: "from-emerald-500 to-teal-600",
   },
   {
     title: "Deep Learning Prediction Models",
     type: "Deep Learning",
-    description:
-      "CNN, RNN, and LSTM models on IMDb sentiment and spam detection datasets with neural architecture optimisation.",
+    description: "CNN, RNN, and LSTM models on IMDb sentiment and spam detection datasets with neural architecture optimisation.",
     tags: ["CNN", "LSTM", "RNN", "PyTorch"],
     gradient: "from-violet-500 to-purple-600",
   },
   {
     title: "Customer Retail Forecasting",
     type: "ML · Time Series",
-    description:
-      "Purchasing trend analysis and predictive modelling delivering actionable business insights for customer satisfaction and growth.",
+    description: "Purchasing trend analysis and predictive modelling delivering actionable business insights for customer satisfaction and growth.",
     tags: ["Scikit-learn", "Time Series", "Python"],
     gradient: "from-orange-500 to-amber-600",
   },
@@ -55,48 +45,24 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -6, transition: { duration: 0.2 } }}
-      className="group relative rounded-2xl border border-white/5 bg-surface overflow-hidden cursor-default
+      className="group relative rounded-2xl border border-[var(--c-border)] bg-surface overflow-hidden cursor-default
         hover:border-accent/25 hover:shadow-2xl hover:shadow-accent/10 transition-all duration-300"
     >
-      {/* Gradient top border */}
-      <div
-        className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${project.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}
-      />
-
-      {/* Subtle gradient bg on hover */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-300 pointer-events-none`}
-      />
+      <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${project.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
+      <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-300 pointer-events-none`} />
 
       <div className="relative p-6 sm:p-7 flex flex-col h-full">
-        {/* Type badge */}
         <div className="flex items-center justify-between mb-4">
-          <span className="font-mono text-xs text-[#6b7280] tracking-wider uppercase">
-            {project.type}
-          </span>
-          <ArrowUpRight
-            size={16}
-            className="text-[#6b7280] group-hover:text-accent-light group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
-          />
+          <span className="font-mono text-xs text-fg-3 tracking-wider uppercase">{project.type}</span>
+          <ArrowUpRight size={16} className="text-fg-3 group-hover:text-accent-light group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200" />
         </div>
-
-        {/* Title */}
-        <h3 className="font-sans font-semibold text-white text-lg leading-snug mb-3 group-hover:text-accent-light transition-colors duration-200">
+        <h3 className="font-sans font-semibold text-fg text-lg leading-snug mb-3 group-hover:text-accent-light transition-colors duration-200">
           {project.title}
         </h3>
-
-        {/* Description */}
-        <p className="font-sans text-sm text-[#9ca3af] leading-relaxed flex-1 mb-6">
-          {project.description}
-        </p>
-
-        {/* Tags */}
+        <p className="font-sans text-sm text-fg-2 leading-relaxed flex-1 mb-6">{project.description}</p>
         <div className="flex flex-wrap gap-2 mt-auto">
           {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="font-mono text-xs px-2.5 py-1 rounded-md bg-surface-2 border border-white/6 text-[#6b7280]"
-            >
+            <span key={tag} className="font-mono text-xs px-2.5 py-1 rounded-md bg-surface-2 border border-[var(--c-border)] text-fg-3">
               {tag}
             </span>
           ))}
@@ -107,13 +73,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 }
 
 export default function Projects() {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section id="projects" className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 30 }}
@@ -124,12 +89,10 @@ export default function Projects() {
           <span className="font-mono text-xs text-accent-light tracking-widest uppercase mb-3 block">
             04 — Projects
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-white">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-fg">
             Things I&apos;ve Built
           </h2>
         </motion.div>
-
-        {/* Project grid */}
         <div className="grid sm:grid-cols-2 gap-5">
           {PROJECTS.map((project, i) => (
             <ProjectCard key={project.title} project={project} index={i} />

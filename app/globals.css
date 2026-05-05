@@ -2,23 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Dark theme (default) ───────────────────────────────────────────── */
 :root {
-  --bg: #0a0a0f;
-  --surface: #12121a;
-  --surface-2: #1a1a26;
-  --accent: #1a4fff;
-  --accent-light: #3d6fff;
-  --accent-glow: rgba(26, 79, 255, 0.15);
-  --text-primary: #f0f0f5;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-accent: rgba(26, 79, 255, 0.3);
-  --font-dm-serif: 'DM Serif Display', Georgia, serif;
-  --font-dm-sans: 'DM Sans', system-ui, sans-serif;
-  --font-jetbrains-mono: 'JetBrains Mono', Menlo, monospace;
+  --c-bg:           10 10 15;      /* #0a0a0f */
+  --c-surface:      18 18 26;      /* #12121a */
+  --c-surface-2:    26 26 38;      /* #1a1a26 */
+  --c-accent:       26 79 255;     /* #1a4fff */
+  --c-accent-light: 61 111 255;    /* #3d6fff */
+  --c-fg:           240 240 245;   /* #f0f0f5 */
+  --c-fg-2:         156 163 175;   /* #9ca3af */
+  --c-fg-3:         107 114 128;   /* #6b7280 */
+  --c-fg-4:         55  65  81;    /* #374151 */
+
+  --c-border:     rgba(255,255,255,0.06);
+  --c-border-md:  rgba(255,255,255,0.08);
+  --c-border-lg:  rgba(255,255,255,0.12);
+  --c-hover:      rgba(255,255,255,0.04);
+  --c-hover-md:   rgba(255,255,255,0.08);
 }
 
+/* ─── Light theme ────────────────────────────────────────────────────── */
+.light {
+  --c-bg:           248 248 252;   /* #f8f8fc */
+  --c-surface:      255 255 255;   /* #ffffff */
+  --c-surface-2:    240 240 248;   /* #f0f0f8 */
+  --c-accent:       26 79 255;     /* same blue */
+  --c-accent-light: 20 68 230;     /* slightly darker for contrast */
+  --c-fg:           10 10 15;      /* #0a0a0f */
+  --c-fg-2:         75 85 99;      /* #4b5563 */
+  --c-fg-3:         107 114 128;   /* #6b7280 */
+  --c-fg-4:         209 213 219;   /* #d1d5db */
+
+  --c-border:     rgba(0,0,0,0.07);
+  --c-border-md:  rgba(0,0,0,0.10);
+  --c-border-lg:  rgba(0,0,0,0.15);
+  --c-hover:      rgba(0,0,0,0.04);
+  --c-hover-md:   rgba(0,0,0,0.07);
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────── */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -31,76 +53,36 @@ html {
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--text-primary);
-  font-family: var(--font-dm-sans);
+  background-color: rgb(var(--c-bg));
+  color: rgb(var(--c-fg));
+  font-family: var(--font-dm-sans, system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--surface-2);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
+/* ─── Scrollbar ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgb(var(--c-bg)); }
+::-webkit-scrollbar-thumb { background: rgb(var(--c-surface-2)); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--c-accent)); }
 
-/* Selection */
+/* ─── Selection ──────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(26, 79, 255, 0.3);
+  background: rgba(26,79,255,0.3);
   color: #fff;
 }
 
-/* Gradient text utility */
+/* ─── Gradient text ──────────────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+  background: linear-gradient(135deg, rgb(var(--c-fg)) 0%, rgb(var(--c-accent-light)) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Accent glow utility */
-.glow-accent {
-  box-shadow: 0 0 30px rgba(26, 79, 255, 0.2), 0 0 60px rgba(26, 79, 255, 0.1);
-}
-
-/* Glass card utility */
-.glass {
-  background: rgba(18, 18, 26, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-}
-
-/* Prefers-reduced-motion override */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* Timeline line */
-.timeline-line {
-  background: linear-gradient(to bottom, var(--accent), transparent);
-}
-
-/* Noise texture overlay */
+/* ─── Noise texture overlay ──────────────────────────────────────────── */
 body::before {
   content: '';
   position: fixed;
@@ -108,5 +90,16 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
-  opacity: 0.4;
+  opacity: 0.3;
+}
+.light body::before { opacity: 0.15; }
+
+/* ─── Prefers-reduced-motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
 }

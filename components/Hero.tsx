@@ -12,10 +12,10 @@ const ROLES = [
 ];
 
 function useTypingEffect(words: string[], speed = 80, pause = 1800) {
-  const [display, setDisplay] = useState("");
+  const [display, setDisplay]   = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
-  const [deleting, setDeleting] = useState(false);
+  const [deleting, setDeleting]  = useState(false);
 
   useEffect(() => {
     const word = words[wordIndex];
@@ -51,23 +51,19 @@ function ParticleCanvas() {
 
     let animId: number;
     const particles: Array<{
-      x: number; y: number; vx: number; vy: number;
-      size: number; opacity: number;
+      x: number; y: number; vx: number; vy: number; size: number; opacity: number;
     }> = [];
 
     const resize = () => {
-      canvas.width = window.innerWidth;
+      canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
     window.addEventListener("resize", resize);
 
-    const onMouse = (e: MouseEvent) => {
-      mouse.current = { x: e.clientX, y: e.clientY };
-    };
+    const onMouse = (e: MouseEvent) => { mouse.current = { x: e.clientX, y: e.clientY }; };
     window.addEventListener("mousemove", onMouse, { passive: true });
 
-    // Init particles
     for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * window.innerWidth,
@@ -75,7 +71,7 @@ function ParticleCanvas() {
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.3,
         size: Math.random() * 1.5 + 0.3,
-        opacity: Math.random() * 0.4 + 0.05,
+        opacity: Math.random() * 0.35 + 0.05,
       });
     }
 
@@ -83,22 +79,16 @@ function ParticleCanvas() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((p) => {
-        // Subtle mouse attraction
-        const dx = mouse.current.x - p.x;
-        const dy = mouse.current.y - p.y;
+        const dx   = mouse.current.x - p.x;
+        const dy   = mouse.current.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          p.vx += dx * 0.00015;
-          p.vy += dy * 0.00015;
-        }
+        if (dist < 150) { p.vx += dx * 0.00015; p.vy += dy * 0.00015; }
 
-        p.vx *= 0.99;
-        p.vy *= 0.99;
-        p.x += p.vx;
-        p.y += p.vy;
+        p.vx *= 0.99; p.vy *= 0.99;
+        p.x  += p.vx; p.y  += p.vy;
 
         if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
+        if (p.x > canvas.width)  p.x = 0;
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
@@ -108,11 +98,10 @@ function ParticleCanvas() {
         ctx.fill();
       });
 
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
+          const dx   = particles[i].x - particles[j].x;
+          const dy   = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 100) {
             ctx.beginPath();
@@ -153,16 +142,12 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Animated background */}
       <ParticleCanvas />
 
-      {/* Radial glow */}
+      {/* Radial accent glow */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(26,79,255,0.08) 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(26,79,255,0.08) 0%, transparent 70%)" }}
         aria-hidden="true"
       />
 
@@ -171,7 +156,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px)",
+            "linear-gradient(rgba(128,128,128,.4) 1px, transparent 1px), linear-gradient(90deg, rgba(128,128,128,.4) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
         aria-hidden="true"
@@ -221,7 +206,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="font-sans text-base sm:text-lg text-[#9ca3af] max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="font-sans text-base sm:text-lg text-fg-2 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           I build AI systems end to end — from model training to deployed product.
         </motion.p>
@@ -235,7 +220,7 @@ export default function Hero() {
         >
           <a
             href="/resume.pdf"
-            download
+            download="Muhammed Faris Mukthar MV.pdf"
             className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-accent hover:bg-accent-light text-white font-semibold text-sm transition-all duration-200 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
           >
             <Download size={16} strokeWidth={2.5} />
@@ -243,7 +228,7 @@ export default function Hero() {
           </a>
           <a
             href="#projects"
-            className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl border border-[var(--c-border-lg)] bg-[var(--c-hover)] hover:bg-[var(--c-hover-md)] text-fg font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5"
           >
             <Eye size={16} strokeWidth={2.5} />
             View Projects
@@ -257,7 +242,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#6b7280] hover:text-white transition-colors group"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-fg-3 hover:text-fg transition-colors"
         aria-label="Scroll down"
       >
         <span className="font-mono text-xs tracking-widest uppercase">Scroll</span>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, DM_Serif_Display, JetBrains_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -34,16 +35,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`scroll-smooth ${dmSans.variable} ${dmSerifDisplay.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="bg-bg text-[#f0f0f5] font-sans antialiased overflow-x-hidden">
-        {children}
+      <body className="bg-bg text-fg font-sans antialiased overflow-x-hidden">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
