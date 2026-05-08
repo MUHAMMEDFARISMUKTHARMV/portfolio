@@ -3,12 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
-interface StatItem { value: number; suffix: string; label: string; sublabel: string; }
-
-const STATS: StatItem[] = [
+const STATS = [
   { value: 1, suffix: "+", label: "Years Industry",  sublabel: "Experience" },
-  { value: 5, suffix: "+", label: "ML Models",       sublabel: "Deployed" },
-  { value: 3, suffix: "+", label: "Full-Stack",      sublabel: "Products Shipped" },
+  { value: 5, suffix: "+", label: "ML Models",       sublabel: "Deployed to Production" },
+  { value: 3, suffix: "+", label: "Full-Stack",      sublabel: "AI Products Shipped" },
   { value: 2, suffix: "+", label: "Edge AI",         sublabel: "Deployments (RPi / Jetson)" },
 ];
 
@@ -19,13 +17,11 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 
   useEffect(() => {
     if (!inView) return;
-    let start = 0;
-    const step = 1200 / target;
+    let n = 0;
     const timer = setInterval(() => {
-      start += 1;
-      setCount(start);
-      if (start >= target) clearInterval(timer);
-    }, step);
+      n += 1; setCount(n);
+      if (n >= target) clearInterval(timer);
+    }, 1200 / target);
     return () => clearInterval(timer);
   }, [inView, target]);
 
@@ -79,12 +75,11 @@ export default function Stats() {
             className="relative max-w-3xl mx-auto text-center"
           >
             <p className="font-sans text-base sm:text-lg text-fg-2 leading-relaxed">
-              ML/AI Engineer with a{" "}
-              <span className="text-fg font-medium">
-                Master&apos;s in Computer Science (Data Analytics)
-              </span>
-              . I specialise in building complete AI-powered systems — trained models, REST APIs,
-              web dashboards, mobile apps, and edge deployments — independently and end to end.
+              AI/ML Engineer with a{" "}
+              <span className="text-fg font-medium">Master&apos;s in Computer Science (Data Analytics)</span>
+              . Proven expertise across the full model lifecycle — from dataset creation and fine-tuning to production
+              deployment — specialising in computer vision, NLP, generative AI, and edge deployments, with experience
+              shipping complete AI-powered products end to end.
             </p>
           </motion.div>
         </motion.div>

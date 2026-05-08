@@ -4,48 +4,44 @@
 
 /* ─── Dark theme (default) ───────────────────────────────────────────── */
 :root {
-  --c-bg:           10 10 15;      /* #0a0a0f */
-  --c-surface:      18 18 26;      /* #12121a */
-  --c-surface-2:    26 26 38;      /* #1a1a26 */
-  --c-accent:       26 79 255;     /* #1a4fff */
-  --c-accent-light: 61 111 255;    /* #3d6fff */
-  --c-fg:           240 240 245;   /* #f0f0f5 */
-  --c-fg-2:         156 163 175;   /* #9ca3af */
-  --c-fg-3:         107 114 128;   /* #6b7280 */
-  --c-fg-4:         55  65  81;    /* #374151 */
+  --c-bg:           10 10 15;       /* #0a0a0f */
+  --c-surface:      18 18 26;       /* #12121a */
+  --c-surface-2:    26 26 38;       /* #1a1a26 */
+  --c-accent:       26 79 255;      /* #1a4fff */
+  --c-accent-light: 61 111 255;     /* #3d6fff */
+  --c-fg:           240 240 245;    /* #f0f0f5 */
+  --c-fg-2:         156 163 175;    /* #9ca3af */
+  --c-fg-3:         107 114 128;    /* #6b7280 */
+  --c-fg-4:         55  65  81;     /* #374151 */
 
-  --c-border:     rgba(255,255,255,0.06);
-  --c-border-md:  rgba(255,255,255,0.08);
-  --c-border-lg:  rgba(255,255,255,0.12);
-  --c-hover:      rgba(255,255,255,0.04);
-  --c-hover-md:   rgba(255,255,255,0.08);
+  --c-border:    rgba(255,255,255,0.06);
+  --c-border-md: rgba(255,255,255,0.09);
+  --c-border-lg: rgba(255,255,255,0.13);
+  --c-hover:     rgba(255,255,255,0.04);
+  --c-hover-md:  rgba(255,255,255,0.08);
 }
 
-/* ─── Light theme ────────────────────────────────────────────────────── */
+/* ─── Light theme — blue-tinted to match the dark navy palette ───────── */
 .light {
-  --c-bg:           248 248 252;   /* #f8f8fc */
-  --c-surface:      255 255 255;   /* #ffffff */
-  --c-surface-2:    240 240 248;   /* #f0f0f8 */
-  --c-accent:       26 79 255;     /* same blue */
-  --c-accent-light: 20 68 230;     /* slightly darker for contrast */
-  --c-fg:           10 10 15;      /* #0a0a0f */
-  --c-fg-2:         75 85 99;      /* #4b5563 */
-  --c-fg-3:         107 114 128;   /* #6b7280 */
-  --c-fg-4:         209 213 219;   /* #d1d5db */
+  --c-bg:           238 240 248;    /* #eef0f8  cool blue-tinted off-white */
+  --c-surface:      246 247 253;    /* #f6f7fd  near-white with blue tint  */
+  --c-surface-2:    228 231 245;    /* #e4e7f5  slightly saturated blue-gray */
+  --c-accent:       26  79  255;    /* same blue */
+  --c-accent-light: 20  68  230;    /* #1444e6  slightly darker for contrast */
+  --c-fg:           13  14  26;     /* #0d0e1a  near-black matching dark base */
+  --c-fg-2:         61  68  102;    /* #3d4466  mid blue-indigo */
+  --c-fg-3:         113 122 168;    /* #717aa8  muted blue-purple */
+  --c-fg-4:         176 184 216;    /* #b0b8d8  very muted */
 
-  --c-border:     rgba(0,0,0,0.07);
-  --c-border-md:  rgba(0,0,0,0.10);
-  --c-border-lg:  rgba(0,0,0,0.15);
-  --c-hover:      rgba(0,0,0,0.04);
-  --c-hover-md:   rgba(0,0,0,0.07);
+  --c-border:    rgba(26,79,255,0.09);
+  --c-border-md: rgba(26,79,255,0.14);
+  --c-border-lg: rgba(26,79,255,0.21);
+  --c-hover:     rgba(26,79,255,0.05);
+  --c-hover-md:  rgba(26,79,255,0.09);
 }
 
 /* ─── Reset ──────────────────────────────────────────────────────────── */
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+* { box-sizing: border-box; padding: 0; margin: 0; }
 
 html {
   scroll-behavior: smooth;
@@ -69,10 +65,7 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: rgb(var(--c-accent)); }
 
 /* ─── Selection ──────────────────────────────────────────────────────── */
-::selection {
-  background: rgba(26,79,255,0.3);
-  color: #fff;
-}
+::selection { background: rgba(26,79,255,0.3); color: #fff; }
 
 /* ─── Gradient text ──────────────────────────────────────────────────── */
 .gradient-text {
@@ -82,7 +75,7 @@ body {
   background-clip: text;
 }
 
-/* ─── Noise texture overlay ──────────────────────────────────────────── */
+/* ─── Noise texture ──────────────────────────────────────────────────── */
 body::before {
   content: '';
   position: fixed;
@@ -92,7 +85,7 @@ body::before {
   z-index: 0;
   opacity: 0.3;
 }
-.light body::before { opacity: 0.15; }
+.light body::before { opacity: 0.12; }
 
 /* ─── Prefers-reduced-motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {

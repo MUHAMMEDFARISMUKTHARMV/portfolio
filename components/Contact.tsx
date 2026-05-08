@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Mail, Linkedin, Github, MapPin } from "lucide-react";
+import { Mail, Linkedin, Github, MapPin, Phone } from "lucide-react";
 
 const LINKS = [
   {
@@ -11,6 +11,13 @@ const LINKS = [
     value: "farismukthar@gmail.com",
     href: "mailto:farismukthar@gmail.com",
     hover: "hover:text-sky-400 hover:border-sky-400/30 hover:bg-sky-500/5",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+91 9048682885",
+    href: "tel:+919048682885",
+    hover: "hover:text-green-400 hover:border-green-400/30 hover:bg-green-500/5",
   },
   {
     icon: Linkedin,
@@ -34,16 +41,8 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-32 px-6 relative overflow-hidden">
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 100%, rgba(26,79,255,0.07) 0%, transparent 70%)" }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 40% 40% at 20% 20%, rgba(26,79,255,0.04) 0%, transparent 60%)" }}
-        aria-hidden="true"
-      />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 60% at 50% 100%, rgba(26,79,255,0.07) 0%, transparent 70%)" }} aria-hidden="true" />
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 40% 40% at 20% 20%, rgba(26,79,255,0.04) 0%, transparent 60%)" }} aria-hidden="true" />
 
       <div className="relative max-w-3xl mx-auto text-center" ref={ref}>
         <motion.span
@@ -52,7 +51,7 @@ export default function Contact() {
           transition={{ duration: 0.5 }}
           className="font-mono text-xs text-accent-light tracking-widest uppercase mb-4 block"
         >
-          06 — Contact
+          Contact
         </motion.span>
 
         <motion.h2
@@ -79,7 +78,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-10"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8"
         >
           {LINKS.map((link, i) => {
             const Icon = link.icon;
@@ -87,11 +86,11 @@ export default function Contact() {
               <motion.a
                 key={link.label}
                 href={link.href}
-                target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                target={link.href.startsWith("mailto") || link.href.startsWith("tel") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 16 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.45, delay: 0.35 + i * 0.08 }}
+                transition={{ duration: 0.45, delay: 0.35 + i * 0.07 }}
                 whileHover={{ y: -3 }}
                 className={`flex items-center gap-3 px-5 py-3.5 rounded-xl border border-[var(--c-border)] bg-surface
                   text-fg-2 transition-all duration-200 ${link.hover}`}

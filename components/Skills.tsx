@@ -6,12 +6,42 @@ import { motion, useInView } from "framer-motion";
 interface SkillGroup { label: string; accent: boolean; muted?: boolean; skills: string[]; }
 
 const SKILL_GROUPS: SkillGroup[] = [
-  { label: "ML / AI",         accent: true,  skills: ["YOLOv8","LayoutLM","RoBERTa","Siamese Networks","CNN/RNN/LSTM","LLMs","LangChain"] },
-  { label: "Web & Mobile",    accent: false, skills: ["Next.js","Node.js","REST APIs","Android Studio","Supabase"] },
-  { label: "Cloud & DevOps",  accent: false, skills: ["AWS EC2","AWS S3","Docker","Model Deployment"] },
-  { label: "Languages",       accent: false, skills: ["Python","JavaScript","SQL","Embedded C/C++","MicroPython"] },
-  { label: "Edge Hardware",   accent: false, muted: true, skills: ["Raspberry Pi","Jetson Nano","ESP32","Arduino"] },
-  { label: "Libraries",       accent: false, skills: ["PyTorch","TensorFlow","OpenCV","Scikit-learn","Azure ML"] },
+  {
+    label: "ML / AI",
+    accent: true,
+    skills: ["YOLOv8", "LayoutLM", "RoBERTa", "Siamese Networks", "CNN/RNN/LSTM", "LLMs", "LangChain", "RAG", "Pgvector"],
+  },
+  {
+    label: "Data Science",
+    accent: false,
+    skills: ["Predictive Modelling", "EDA", "Time Series", "Statistical Modelling", "Tableau", "Power BI"],
+  },
+  {
+    label: "Web & Mobile",
+    accent: false,
+    skills: ["Next.js", "Node.js", "REST APIs", "Supabase"],
+  },
+  {
+    label: "Cloud & DevOps",
+    accent: false,
+    skills: ["AWS EC2", "AWS S3", "Docker", "Microsoft Azure", "Model Containerisation"],
+  },
+  {
+    label: "Languages",
+    accent: false,
+    skills: ["Python", "JavaScript", "SQL", "Embedded C/C++", "MicroPython", "HTML/CSS"],
+  },
+  {
+    label: "Libraries",
+    accent: false,
+    skills: ["PyTorch", "TensorFlow", "OpenCV", "Scikit-learn", "Pandas", "NumPy"],
+  },
+  {
+    label: "Edge Hardware",
+    accent: false,
+    muted: true,
+    skills: ["Raspberry Pi", "Jetson Nano", "ESP32", "Arduino"],
+  },
 ];
 
 function SkillTag({ name, accent, muted, delay }: { name: string; accent: boolean; muted?: boolean; delay: number }) {
@@ -25,8 +55,8 @@ function SkillTag({ name, accent, muted, delay }: { name: string; accent: boolea
         ${accent
           ? "bg-accent/15 border-accent/40 text-accent-light hover:bg-accent/25 hover:border-accent/60"
           : muted
-          ? "bg-[var(--c-hover)] border-[var(--c-border)] text-fg-3 hover:text-fg-2 hover:border-[var(--c-border-md)]"
-          : "bg-surface-2 border-[var(--c-border)] text-fg-2 hover:bg-[var(--c-hover-md)] hover:text-fg hover:border-[var(--c-border-lg)]"
+            ? "bg-[var(--c-hover)] border-[var(--c-border)] text-fg-3 hover:text-fg-2 hover:border-[var(--c-border-md)]"
+            : "bg-surface-2 border-[var(--c-border)] text-fg-2 hover:bg-[var(--c-hover-md)] hover:text-fg hover:border-[var(--c-border-lg)]"
         }`}
     >
       {name}
@@ -35,7 +65,7 @@ function SkillTag({ name, accent, muted, delay }: { name: string; accent: boolea
 }
 
 export default function Skills() {
-  const ref    = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
@@ -48,12 +78,8 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <span className="font-mono text-xs text-accent-light tracking-widest uppercase mb-3 block">
-            02 — Skills
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-fg">
-            What I Work With
-          </h2>
+          <span className="font-mono text-xs text-accent-light tracking-widest uppercase mb-3 block">Skills</span>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-fg">What I Work With</h2>
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

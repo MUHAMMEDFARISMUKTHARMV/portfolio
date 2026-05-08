@@ -3,35 +3,29 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, Download, Eye } from "lucide-react";
+import ResumeModal from "./ResumeModal";
 
-const ROLES = [
-  "ML Engineer",
-  "AI Systems Builder",
-  "Edge AI Developer",
-  "Full-Stack Developer",
-];
+const ROLES = ["AI/ML Engineer", "AI Developer", "Data Scientist"];
 
 function useTypingEffect(words: string[], speed = 80, pause = 1800) {
-  const [display, setDisplay]   = useState("");
+  const [display, setDisplay]     = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
-  const [deleting, setDeleting]  = useState(false);
+  const [deleting, setDeleting]   = useState(false);
 
   useEffect(() => {
     const word = words[wordIndex];
     let timeout: ReturnType<typeof setTimeout>;
-
     if (!deleting && charIndex < word.length) {
       timeout = setTimeout(() => setCharIndex((c) => c + 1), speed);
     } else if (!deleting && charIndex === word.length) {
       timeout = setTimeout(() => setDeleting(true), pause);
     } else if (deleting && charIndex > 0) {
       timeout = setTimeout(() => setCharIndex((c) => c - 1), speed / 2);
-    } else if (deleting && charIndex === 0) {
+    } else {
       setDeleting(false);
       setWordIndex((i) => (i + 1) % words.length);
     }
-
     setDisplay(word.slice(0, charIndex));
     return () => clearTimeout(timeout);
   }, [charIndex, deleting, wordIndex, words, speed, pause]);
@@ -41,7 +35,7 @@ function useTypingEffect(words: string[], speed = 80, pause = 1800) {
 
 function ParticleCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouse = useRef({ x: 0, y: 0 });
+  const mouse     = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -50,17 +44,11 @@ function ParticleCanvas() {
     if (!ctx) return;
 
     let animId: number;
-    const particles: Array<{
-      x: number; y: number; vx: number; vy: number; size: number; opacity: number;
-    }> = [];
+    const particles: Array<{ x: number; y: number; vx: number; vy: number; size: number; opacity: number }> = [];
 
-    const resize = () => {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize();
     window.addEventListener("resize", resize);
-
     const onMouse = (e: MouseEvent) => { mouse.current = { x: e.clientX, y: e.clientY }; };
     window.addEventListener("mousemove", onMouse, { passive: true });
 
@@ -77,43 +65,37 @@ function ParticleCanvas() {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       particles.forEach((p) => {
-        const dx   = mouse.current.x - p.x;
-        const dy   = mouse.current.y - p.y;
+        const dx = mouse.current.x - p.x;
+        const dy = mouse.current.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < 150) { p.vx += dx * 0.00015; p.vy += dy * 0.00015; }
-
         p.vx *= 0.99; p.vy *= 0.99;
-        p.x  += p.vx; p.y  += p.vy;
-
+        p.x += p.vx; p.y += p.vy;
         if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width)  p.x = 0;
+        if (p.x > canvas.width) p.x = 0;
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
-
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(26,79,255,${p.opacity})`;
         ctx.fill();
       });
-
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          const dx   = particles[i].x - particles[j].x;
-          const dy   = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d  = Math.sqrt(dx * dx + dy * dy);
+          if (d < 100) {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(26,79,255,${0.08 * (1 - dist / 100)})`;
+            ctx.strokeStyle = `rgba(26,79,255,${0.08 * (1 - d / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       }
-
       animId = requestAnimationFrame(draw);
     };
     draw();
@@ -125,33 +107,22 @@ function ParticleCanvas() {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none"
-      aria-hidden="true"
-    />
-  );
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true" />;
 }
 
 export default function Hero() {
-  const typedText = useTypingEffect(ROLES);
+  const typedText              = useTypingEffect(ROLES);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-    >
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       <ParticleCanvas />
 
-      {/* Radial accent glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, rgba(26,79,255,0.08) 0%, transparent 70%)" }}
         aria-hidden="true"
       />
-
-      {/* Grid overlay */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
@@ -162,9 +133,7 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -172,12 +141,9 @@ export default function Hero() {
           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/30 bg-accent/10 mb-8"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-          <span className="font-mono text-xs text-accent-light tracking-wider">
-            Available for new opportunities
-          </span>
+          <span className="font-mono text-xs text-accent-light tracking-wider">Available for new opportunities</span>
         </motion.div>
 
-        {/* Name */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -188,7 +154,6 @@ export default function Hero() {
           <span className="gradient-text">Mukthar M V</span>
         </motion.h1>
 
-        {/* Typing role */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -201,31 +166,28 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           className="font-sans text-base sm:text-lg text-fg-2 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          I build AI systems end to end — from model training to deployed product.
+          From model training and LLM/RAG integration to full-stack web apps, Android apps, and edge deployments — I build and ship complete AI systems independently.
         </motion.p>
 
-        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a
-            href="/resume.pdf"
-            download="Muhammed Faris Mukthar MV.pdf"
+          <button
+            onClick={() => setResumeOpen(true)}
             className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-accent hover:bg-accent-light text-white font-semibold text-sm transition-all duration-200 hover:shadow-xl hover:shadow-accent/30 hover:-translate-y-0.5"
           >
             <Download size={16} strokeWidth={2.5} />
             Download Resume
-          </a>
+          </button>
           <a
             href="#projects"
             className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl border border-[var(--c-border-lg)] bg-[var(--c-hover)] hover:bg-[var(--c-hover-md)] text-fg font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5"
@@ -236,7 +198,6 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.a
         href="#about"
         initial={{ opacity: 0 }}
@@ -246,13 +207,12 @@ export default function Hero() {
         aria-label="Scroll down"
       >
         <span className="font-mono text-xs tracking-widest uppercase">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
           <ArrowDown size={18} />
         </motion.div>
       </motion.a>
+
+      <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
     </section>
   );
 }

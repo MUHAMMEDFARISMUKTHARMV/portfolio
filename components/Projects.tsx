@@ -10,29 +10,33 @@ const PROJECTS: Project[] = [
   {
     title: "Document Extraction Chatbot",
     type: "LLM · RAG · NLP",
-    description: "Government order chatbot using LangChain and LLMs with context-aware retrieval over document collections. End-to-end RAG pipeline design.",
-    tags: ["LangChain", "LLMs", "TensorFlow", "RAG"],
+    description:
+      "Government order chatbot with end-to-end RAG pipeline — document ingestion, vector retrieval, and context-aware LLM response generation over large document collections.",
+    tags: ["LangChain", "LLMs", "RAG", "TensorFlow"],
     gradient: "from-blue-500 to-indigo-600",
   },
   {
-    title: "Plant Disease Detection",
+    title: "Plant Disease Detection App",
     type: "Computer Vision",
-    description: "Real-time leaf image classification using YOLOv8 to detect plant diseases with actionable agricultural insights.",
+    description:
+      "Real-time plant disease detection using YOLOv8 for leaf image classification, surfacing actionable insights for farmers and agronomists.",
     tags: ["YOLOv8", "OpenCV", "Python"],
     gradient: "from-emerald-500 to-teal-600",
   },
   {
     title: "Deep Learning Prediction Models",
     type: "Deep Learning",
-    description: "CNN, RNN, and LSTM models on IMDb sentiment and spam detection datasets with neural architecture optimisation.",
+    description:
+      "Predictive models on IMDb sentiment and spam detection datasets using CNN, RNN, and LSTM architectures with neural architecture optimisation via backpropagation tuning.",
     tags: ["CNN", "LSTM", "RNN", "PyTorch"],
     gradient: "from-violet-500 to-purple-600",
   },
   {
-    title: "Customer Retail Forecasting",
+    title: "Customer Retail Trend Forecasting",
     type: "ML · Time Series",
-    description: "Purchasing trend analysis and predictive modelling delivering actionable business insights for customer satisfaction and growth.",
-    tags: ["Scikit-learn", "Time Series", "Python"],
+    description:
+      "Purchasing trend analysis and predictive modelling delivering actionable business intelligence for retail decision-making and revenue growth.",
+    tags: ["Scikit-learn", "Time Series", "Pandas", "Python"],
     gradient: "from-orange-500 to-amber-600",
   },
 ];
@@ -86,12 +90,8 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <span className="font-mono text-xs text-accent-light tracking-widest uppercase mb-3 block">
-            04 — Projects
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-fg">
-            Things I&apos;ve Built
-          </h2>
+          <span className="font-mono text-xs text-accent-light tracking-widest uppercase mb-3 block">Projects</span>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal text-fg">Things I&apos;ve Built</h2>
         </motion.div>
         <div className="grid sm:grid-cols-2 gap-5">
           {PROJECTS.map((project, i) => (
